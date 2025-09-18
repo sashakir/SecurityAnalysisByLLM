@@ -1,0 +1,6 @@
+# Vuln 1: Command Injection: `BenchmarkTest00309.java:67-68`
+
+* Severity: High
+* Description: The application executes an operating system command with environment variables that could potentially be controlled by user input. While the code appears to overwrite the user-controlled `param` with a hardcoded safe value before execution, the vulnerability exists in the design pattern.
+* Exploit Scenario: The code retrieves a value from HTTP headers, URL decodes it, and initially assigns it to a variable that's later used in command execution. Although in this specific instance the value is overwritten with a safe value before execution, this pattern is dangerous and could lead to command injection if the safe assignment is removed or modified in future changes.
+* Recommendation: Avoid using user-controlled input in command execution entirely. If command execution is necessary, use a whitelist approach to validate commands and arguments, and consider using ProcessBuilder with specific command arguments rather than passing a full command string to Runtime.exec().

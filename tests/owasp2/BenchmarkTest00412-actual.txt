@@ -1,0 +1,18 @@
+# Vuln 1: Command Injection: `BenchmarkTest00412.java:63-67`
+
+* Severity: High
+* Description: User input from the `BenchmarkTest00412` parameter is passed as an environment variable to a system command execution without proper validation or sanitization.
+* Exploit Scenario: An attacker can provide malicious input in the `BenchmarkTest00412` parameter that could potentially influence command execution behavior through environment variables, leading to information disclosure or system compromise.
+* Recommendation: Do not pass user-controlled input as environment variables to system commands. If necessary, implement strict validation using a whitelist approach to ensure only safe values are allowed.
+
+## Details
+
+The vulnerability exists in the following code flow:
+
+1. The application retrieves the `BenchmarkTest00412` parameter from the HTTP request
+2. This parameter is added to a list and eventually assigned to the `bar` variable
+3. The `bar` variable is then passed as an environment variable to `Runtime.exec()`
+
+While the code attempts to make this look safe by manipulating the list, the user input from `param` ultimately ends up in the `bar` variable when the list has more than 2 elements. This value is then passed as an environment variable to a system command.
+
+Environment variables can influence program execution in various ways, potentially allowing an attacker to modify the behavior of the executed command. This represents a command injection vulnerability through environment variable manipulation.

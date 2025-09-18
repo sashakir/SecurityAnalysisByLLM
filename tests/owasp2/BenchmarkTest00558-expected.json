@@ -1,0 +1,13 @@
+{
+  "file": "tests/owasp2/BenchmarkTest00558.java",
+  "issues": [
+    {
+      "type": "CommandInjection",
+      "severity": "HIGH",
+      "location": "BenchmarkTest00558.doPost:84",
+      "line": 84,
+      "line_snippet": "ProcessBuilder pb = new ProcessBuilder(argList);",
+      "evidence": "User-controlled input from the request is used to construct a command executed on the server."
+    }
+  ]
+}

@@ -1,0 +1,13 @@
+# Vuln 1: Path Traversal: `BenchmarkTest00022.java:71-72`
+
+* Severity: High
+* Description: The code creates a file using user-controlled input without proper path validation, allowing for potential path traversal attacks.
+* Exploit Scenario: An attacker could provide specially crafted input to the `BenchmarkTest00022` parameter that, when processed, could potentially influence the file path. While the immediate file path (`passwordFile.txt`) is hardcoded, the parent directory comes from `Utils.TESTFILES_DIR` which could potentially be manipulated depending on how it's implemented. This could allow writing to unauthorized locations on the filesystem.
+* Recommendation: Validate and sanitize all user input before using it in file operations. Use absolute paths for sensitive file operations and implement proper access controls. Consider using a secure file API that prevents path traversal attacks.
+
+# Vuln 2: Information Disclosure: `BenchmarkTest00022.java:74-77`
+
+* Severity: Medium
+* Description: The application writes sensitive data (hash values) to a file named "passwordFile.txt" and reveals to the user that their input was stored.
+* Exploit Scenario: An attacker could use this endpoint to store arbitrary data on the server, potentially filling up disk space or creating files that could be used in secondary attacks. Additionally, the application reveals implementation details about where and how data is stored.
+* Recommendation: Do not store user-controlled input in files on the server without strict validation. If storage is necessary, use a database with proper access controls rather than the filesystem. Do not reveal storage implementation details to users in response messages.

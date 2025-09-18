@@ -1,0 +1,13 @@
+{
+  "file": "tests/owasp1/BenchmarkTest00004.java",
+  "issues": [
+    {
+      "type": "Taint",
+      "severity": "MEDIUM",
+      "location": "BenchmarkTest00004.doPost:67",
+      "line": 67,
+      "line_snippet": "request.getSession().setAttribute(param, \"10340\");",
+      "evidence": "User-controlled input (param) is used directly in a security-sensitive API (session attribute)."
+    }
+  ]
+}

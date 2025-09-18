@@ -1,0 +1,13 @@
+{
+  "file": "tests/owasp2/BenchmarkTest00051.java",
+  "issues": [
+    {
+      "type": "CommandInjection",
+      "severity": "CRITICAL",
+      "location": "BenchmarkTest00051.doPost:58",
+      "line": 58,
+      "line_snippet": "String[] args = {a1, a2, \"echo \" + param};",
+      "evidence": "Uncontrolled user input is passed to Cross-Site Scripting (XSS) sink"
+    }
+  ]
+}

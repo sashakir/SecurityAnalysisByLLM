@@ -1,0 +1,12 @@
+# Vuln 1: SQL Injection: `BenchmarkTest00008.java:53-60`
+
+* Severity: High
+* Description: The application directly incorporates user input from an HTTP header into a SQL callable statement without any sanitization or parameterization, creating a SQL injection vulnerability.
+* Exploit Scenario: An attacker can craft a malicious HTTP header value for "BenchmarkTest00008" that contains SQL syntax to manipulate the database query. For example, sending a header like `BenchmarkTest00008: sp_who; DROP TABLE users; --` would execute the attacker's SQL commands on the database server.
+* Recommendation: Use parameterized queries or prepared statements with bind variables instead of string concatenation. Modify the code to use a parameterized callable statement:
+  ```java
+  String sql = "{call ?}";
+  java.sql.CallableStatement statement = connection.prepareCall(sql);
+  statement.setString(1, param);
+  ```
+  Alternatively, implement proper input validation and sanitization to ensure the parameter only contains expected values before using it in SQL operations.

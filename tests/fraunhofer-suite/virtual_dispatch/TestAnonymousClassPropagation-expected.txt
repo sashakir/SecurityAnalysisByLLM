@@ -1,0 +1,1 @@
+TestAnonymousClassPropagation.java:11

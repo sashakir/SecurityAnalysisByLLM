@@ -1,0 +1,11 @@
+# Vuln 1: Command Injection: `BenchmarkTest00051.java:59`
+
+* Severity: High
+* Category: command_injection
+* Description: User input from the `BenchmarkTest00051` parameter is directly concatenated into a command string without any sanitization or validation, allowing command injection attacks.
+* Exploit Scenario: An attacker can submit a request with a specially crafted parameter value containing shell metacharacters (like `;`, `|`, `&`, etc.) to execute arbitrary commands on the server. For example, sending `; cat /etc/passwd` would cause the server to execute `echo ; cat /etc/passwd`, effectively running both commands.
+* Recommendation: Never directly incorporate user input into command strings. Instead, use safer alternatives:
+  1. Validate input against a strict allowlist of permitted characters
+  2. Use command-line arguments without shell interpretation (avoid shell=True in ProcessBuilder)
+  3. Consider using a library or API that provides the required functionality without executing shell commands
+  4. If command execution is necessary, escape or encode user input appropriately for the target command interpreter

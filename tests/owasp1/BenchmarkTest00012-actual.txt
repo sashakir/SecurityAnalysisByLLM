@@ -1,0 +1,16 @@
+# Vuln 1: LDAP Injection: `BenchmarkTest00012.java:56`
+
+* Severity: High
+* Description: User input from the HTTP header `BenchmarkTest00012` is directly concatenated into an LDAP filter without proper sanitization, allowing LDAP injection attacks.
+* Exploit Scenario: An attacker can craft a malicious HTTP header value containing LDAP special characters (such as `*`, `(`, `)`, `|`, `&`, etc.) to manipulate the LDAP query logic. For example, by sending a header value like `*)(|(objectclass=*))(uid=*`, an attacker could bypass authentication filters or extract unauthorized data from the LDAP directory.
+* Recommendation: Use parameterized LDAP queries or properly escape user input before including it in LDAP filters. Consider using a library like ESAPI (which is already imported in the code) to sanitize the input or implement proper input validation to reject inputs containing LDAP special characters.
+
+```java
+// Current vulnerable code
+String filter = "(&(objectclass=person))(|(uid=" + param + ")(street={0}))";
+
+// Recommended fix - use proper LDAP encoding/escaping
+import org.owasp.esapi.ESAPI;
+String sanitizedParam = ESAPI.encoder().encodeForLDAP(param);
+String filter = "(&(objectclass=person))(|(uid=" + sanitizedParam + ")(street={0}))";
+```

@@ -1,0 +1,21 @@
+{
+  "file": "tests/owasp1/BenchmarkTest00019.java",
+  "issues": [
+    {
+      "type": "Taint",
+      "severity": "HIGH",
+      "location": "BenchmarkTest00019.doPost:72",
+      "line": 72,
+      "line_snippet": "byte[] result = c.doFinal(input);",
+      "evidence": "User-controlled input is used in cryptographic operations without validation."
+    },
+    {
+      "type": "XSS",
+      "severity": "HIGH",
+      "location": "BenchmarkTest00019.doPost:93",
+      "line": 93,
+      "line_snippet": " + org.owasp.esapi.ESAPI.encoder().encodeForHTML(new String(input)) + \"' encrypted and stored<br/>\"",
+      "evidence": "Uncontrolled user input is passed to Cross-Site Scripting (XSS) sink"
+    }
+  ]
+}

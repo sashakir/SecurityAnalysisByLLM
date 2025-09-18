@@ -1,0 +1,21 @@
+# Vuln 1: Command Injection: `BenchmarkTest00308.java:67-68`
+
+* Severity: High
+* Category: command_injection
+* Description: User input from the HTTP header 'BenchmarkTest00308' is directly concatenated with a system command and executed via `Runtime.exec()` without proper sanitization or validation.
+* Exploit Scenario: An attacker can craft a malicious HTTP request with a specially crafted 'BenchmarkTest00308' header containing shell metacharacters (like `;`, `|`, `&`, etc.) to execute arbitrary commands on the server with the privileges of the web application.
+* Recommendation: Never concatenate user input directly with command strings. Instead, use command arrays with `Runtime.exec(String[] cmdarray)` which prevents command injection, or use a library that safely handles command execution. Additionally, implement strict input validation to only allow expected characters and formats.
+
+```java
+// Vulnerable code:
+Process p = r.exec(cmd + bar, argsEnv);
+
+// Recommended fix:
+// 1. Validate input first
+if (!bar.matches("[a-zA-Z0-9 ]+")) {
+    throw new IllegalArgumentException("Invalid input");
+}
+// 2. Use command arrays instead of string concatenation
+String[] cmdArray = {cmd, bar};
+Process p = r.exec(cmdArray, argsEnv);
+```

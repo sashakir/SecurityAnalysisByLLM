@@ -1,0 +1,23 @@
+# Vuln 1: Path Traversal: `BenchmarkTest00028.java:54`
+
+* Severity: High
+* Description: The application directly uses unsanitized user input from the `BenchmarkTest00028` parameter to construct a file path without proper validation or sanitization.
+* Exploit Scenario: An attacker can supply a path traversal sequence like `../../../etc/passwd` as the parameter value, causing the application to create or overwrite files outside the intended directory. This could lead to arbitrary file creation/overwriting on the server's file system.
+* Recommendation: Implement proper input validation by either:
+  1. Using a whitelist of allowed filenames
+  2. Sanitizing the input by removing or encoding path traversal sequences
+  3. Validating the final canonicalized path to ensure it remains within the intended directory using `File.getCanonicalPath()`
+  4. Consider using Java's `Path.normalize()` and checking that the result is still within the intended directory
+
+```java
+// Example fix:
+String sanitizedParam = param.replaceAll("[/\\\\]", ""); // Remove path traversal characters
+fileName = org.owasp.benchmark.helpers.Utils.TESTFILES_DIR + sanitizedParam;
+
+// Additional validation
+File file = new File(fileName);
+if (!file.getCanonicalPath().startsWith(new File(org.owasp.benchmark.helpers.Utils.TESTFILES_DIR).getCanonicalPath())) {
+    // Path traversal attempt detected - reject the operation
+    throw new SecurityException("Path traversal attempt detected");
+}
+```

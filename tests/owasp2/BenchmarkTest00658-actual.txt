@@ -1,0 +1,18 @@
+# Vuln 1: Command Injection: `BenchmarkTest00658.java:65-66`
+
+* Severity: High
+* Category: command_injection
+* Description: The application directly concatenates user input to a system command without proper validation or sanitization, allowing command injection attacks.
+* Exploit Scenario: While the code has a conditional that should assign a constant value to `bar` instead of the user parameter, this logic can be bypassed if the mathematical expression `(7 * 18) + num > 200` evaluates to false. Since `num` is set to 106, the expression evaluates to `(7 * 18) + 106 = 232 > 200`, which is true, so `bar` is set to the constant string. However, if this logic were to change (e.g., through code modification or if `num` were dynamically set to a lower value), then `bar` would contain unsanitized user input from the `param` variable. This would allow an attacker to inject arbitrary OS commands that would be executed by the `r.exec(cmd + bar)` call.
+* Recommendation: Use command-line argument arrays instead of string concatenation to prevent command injection. Alternatively, implement strict input validation to ensure only expected values are accepted, or use a library like Apache Commons Exec that handles command arguments safely.
+
+```java
+// Instead of:
+Process p = r.exec(cmd + bar);
+
+// Use:
+List<String> commandWithArgs = new ArrayList<>();
+commandWithArgs.add(cmd);
+commandWithArgs.add(bar);
+Process p = r.exec(commandWithArgs.toArray(new String[0]));
+```

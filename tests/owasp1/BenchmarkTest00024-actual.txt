@@ -1,0 +1,12 @@
+# Vuln 1: SQL Injection: `BenchmarkTest00024.java:45`
+
+* Severity: High
+* Description: User input from the `BenchmarkTest00024` parameter is directly concatenated into an SQL query without proper sanitization, allowing SQL injection attacks.
+* Exploit Scenario: An attacker can submit a request with a malicious parameter value like `' OR '1'='1` which would modify the query logic to: `SELECT * from USERS where USERNAME=? and PASSWORD='' OR '1'='1'`. This would bypass the password check and allow unauthorized access to user data.
+* Recommendation: Use parameterized queries for all user inputs. Modify the code to use prepared statements for both the username and password parameters:
+```java
+String sql = "SELECT * from USERS where USERNAME=? and PASSWORD=?";
+PreparedStatement statement = connection.prepareStatement(sql, ...);
+statement.setString(1, "foo");
+statement.setString(2, param);
+```

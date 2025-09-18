@@ -1,0 +1,13 @@
+{
+  "file": "tests/owasp2/BenchmarkTest00658.java",
+  "issues": [
+    {
+      "type": "CommandInjection",
+      "severity": "HIGH",
+      "location": "BenchmarkTest00658.doPost:64",
+      "line": 64,
+      "line_snippet": "Process p = r.exec(cmd + bar);",
+      "evidence": "User-controlled input from the request parameter is concatenated with a command string and executed."
+    }
+  ]
+}

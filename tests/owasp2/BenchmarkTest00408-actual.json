@@ -1,0 +1,21 @@
+{
+  "file": "tests/owasp2/BenchmarkTest00408.java",
+  "issues": [
+    {
+      "type": "CommandInjection",
+      "severity": "HIGH",
+      "location": "BenchmarkTest00408.doPost:76",
+      "line": 76,
+      "line_snippet": "Process p = r.exec(args, argsEnv);",
+      "evidence": "User-controlled input 'bar' is used in command execution without validation."
+    },
+    {
+      "type": "XSS",
+      "severity": "MEDIUM",
+      "location": "BenchmarkTest00408.doPost:80",
+      "line": 80,
+      "line_snippet": "response.getWriter().println(org.owasp.esapi.ESAPI.encoder().encodeForHTML(e.getMessage()));",
+      "evidence": "Uncontrolled user input is passed to Cross-Site Scripting (XSS) sink"
+    }
+  ]
+}

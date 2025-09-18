@@ -1,0 +1,12 @@
+# Vuln 1: Command Injection: `BenchmarkTest00093.java:85-86`
+
+* Severity: High
+* Description: User-controlled input from a cookie is directly concatenated with a system command and executed via `Runtime.exec()`, allowing command injection attacks.
+* Exploit Scenario: An attacker can modify the cookie value "BenchmarkTest00093" to include shell metacharacters (like `;`, `|`, `&`) to execute arbitrary commands on the server. For example, setting the cookie to `ls;cat /etc/passwd` would execute both the intended `ls` command and also expose sensitive system files.
+* Recommendation: Use a command argument array instead of string concatenation to prevent command injection. For example: `r.exec(new String[]{cmd, bar}, argsEnv)`. Additionally, implement strict input validation to ensure the parameter only contains expected values.
+
+The vulnerability exists because:
+1. The code retrieves a user-controlled value from a cookie in line 60-67
+2. While there is some processing of the value in the `bar` variable, it ultimately contains user input
+3. This value is directly concatenated with the command string in line 85: `r.exec(cmd + bar, argsEnv)`
+4. This allows an attacker to inject command separators or additional commands

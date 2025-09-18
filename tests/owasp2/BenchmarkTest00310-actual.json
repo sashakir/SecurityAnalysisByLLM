@@ -1,0 +1,13 @@
+{
+  "file": "tests/owasp2/BenchmarkTest00310.java",
+  "issues": [
+    {
+      "type": "CommandInjection",
+      "severity": "HIGH",
+      "location": "BenchmarkTest00310.doPost:85",
+      "line": 85,
+      "line_snippet": "r.exec(cmd + bar, argsEnv, new java.io.File(System.getProperty(\"user.dir\")));",
+      "evidence": "User-controlled input from HTTP headers is passed to Runtime.exec() without validation."
+    }
+  ]
+}

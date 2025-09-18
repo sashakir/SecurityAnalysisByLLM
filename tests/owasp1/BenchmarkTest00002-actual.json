@@ -1,0 +1,21 @@
+{
+  "file": "tests/owasp1/BenchmarkTest00002.java",
+  "issues": [
+    {
+      "type": "XSS",
+      "severity": "HIGH",
+      "location": "BenchmarkTest00002.doPost:73",
+      "line": 73,
+      "line_snippet": "response.getWriter().println(",
+      "evidence": "Uncontrolled user input is passed to Cross-Site Scripting (XSS) sink"
+    },
+    {
+      "type": "Taint",
+      "severity": "MEDIUM",
+      "location": "BenchmarkTest00002.doPost:41",
+      "line": 41,
+      "line_snippet": "userCookie.setDomain(new java.net.URL(request.getRequestURL().toString()).getHost());",
+      "evidence": "User-controlled input is used to set the domain of a cookie without validation."
+    }
+  ]
+}

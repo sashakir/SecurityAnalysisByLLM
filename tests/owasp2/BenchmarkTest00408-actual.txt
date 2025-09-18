@@ -1,0 +1,6 @@
+# Vuln 1: Command Injection: `BenchmarkTest00408.java:67-68`
+
+* Severity: High
+* Description: User input from the `BenchmarkTest00408` parameter is directly incorporated into an OS command without proper sanitization, allowing command injection attacks.
+* Exploit Scenario: An attacker can submit a request with a parameter value containing shell metacharacters such as `;`, `|`, `&`, or backticks, which would allow execution of arbitrary commands with the privileges of the web application. For example, a request with `BenchmarkTest00408=; cat /etc/passwd` on a Unix system would execute the `cat /etc/passwd` command after the intended `ls` command.
+* Recommendation: Use a whitelist approach to validate user input or use safer alternatives to command execution. If command execution is necessary, ensure all user-supplied data is properly sanitized by escaping shell metacharacters. Consider using Java's ProcessBuilder with a list of arguments rather than a single string command, which helps prevent command injection.

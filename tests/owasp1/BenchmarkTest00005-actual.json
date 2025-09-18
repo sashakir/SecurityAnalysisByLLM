@@ -1,0 +1,21 @@
+{
+  "file": "tests/owasp1/BenchmarkTest00005.java",
+  "issues": [
+    {
+      "type": "XSS",
+      "severity": "HIGH",
+      "location": "BenchmarkTest00005.doPost:106",
+      "line": 106,
+      "line_snippet": "    + org.owasp.esapi.ESAPI.encoder().encodeForHTML(new String(input))",
+      "evidence": "Uncontrolled user input is passed to Cross-Site Scripting (XSS) sink"
+    },
+    {
+      "type": "Taint",
+      "severity": "MEDIUM",
+      "location": "BenchmarkTest00005.doPost:100",
+      "line": 100,
+      "line_snippet": "    + org.owasp.esapi.ESAPI.encoder().encodeForHTML(new String(input))",
+      "evidence": "User-controlled input from request header is used without validation"
+    }
+  ]
+}

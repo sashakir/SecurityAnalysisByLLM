@@ -1,0 +1,6 @@
+# Vuln 1: Command Injection: `BenchmarkTest00396.java:63-64`
+
+* Severity: High
+* Description: User input from the `BenchmarkTest00396` parameter is directly incorporated into a command executed by ProcessBuilder without proper sanitization or validation, allowing command injection attacks.
+* Exploit Scenario: An attacker can submit a request with a parameter value containing shell metacharacters such as `;`, `|`, `&`, or backticks, which would allow execution of arbitrary commands on the server. For example, a request with `BenchmarkTest00396=;cat /etc/passwd` would execute the echo command followed by displaying the contents of the password file.
+* Recommendation: Never include user input in command strings. Instead, use parameterized APIs that don't involve the shell, pass user data as arguments rather than part of the command string, or implement strict input validation using a whitelist approach to only allow safe characters.

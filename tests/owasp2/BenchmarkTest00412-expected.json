@@ -1,0 +1,13 @@
+{
+  "file": "tests/owasp2/BenchmarkTest00412.java",
+  "issues": [
+    {
+      "type": "CommandInjection",
+      "severity": "HIGH",
+      "location": "BenchmarkTest00412.doPost:64",
+      "line": 64,
+      "line_snippet": "Process p = r.exec(cmd, argsEnv, new java.io.File(System.getProperty(\"user.dir\")));",
+      "evidence": "User-controlled input from request parameter is used in command execution."
+    }
+  ]
+}

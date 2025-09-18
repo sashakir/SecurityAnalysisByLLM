@@ -1,0 +1,13 @@
+{
+  "file": "tests/owasp1/BenchmarkTest00014.java",
+  "issues": [
+    {
+      "type": "XSS",
+      "severity": "HIGH",
+      "location": "BenchmarkTest00014.doPost:56",
+      "line": 56,
+      "line_snippet": "response.getWriter().format(param, obj);",
+      "evidence": "Uncontrolled user input is passed to Cross-Site Scripting (XSS) sink"
+    }
+  ]
+}

@@ -1,0 +1,13 @@
+{
+  "file": "tests/owasp2/BenchmarkTest00158.java",
+  "issues": [
+    {
+      "type": "CommandInjection",
+      "severity": "HIGH",
+      "location": "BenchmarkTest00158.doPost:68",
+      "line": 68,
+      "line_snippet": "argList.add(\"echo \" + bar);",
+      "evidence": "Uncontrolled user input is used to construct a command that will be executed."
+    }
+  ]
+}

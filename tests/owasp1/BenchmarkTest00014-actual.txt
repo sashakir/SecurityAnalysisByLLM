@@ -1,0 +1,6 @@
+# Vuln 1: Cross-Site Scripting (XSS): `BenchmarkTest00014.java:56`
+
+* Severity: High
+* Description: The application takes the Referer header value from the user request, URL decodes it, and then directly uses it as a format string in `response.getWriter().format(param, obj)` without any sanitization or validation. This creates a reflected XSS vulnerability.
+* Exploit Scenario: An attacker can craft a malicious Referer header containing format specifiers and HTML/JavaScript code, such as `%3Cscript%3Ealert(document.cookie)%3C/script%3E%s` (URL-encoded version of `<script>alert(document.cookie)</script>%s`). When this is used as the format string, it will be rendered as-is in the response, executing the JavaScript in the victim's browser. The application explicitly disables XSS protection by setting the `X-XSS-Protection` header to "0", making exploitation easier.
+* Recommendation: Never use user-controlled input as a format string. Instead, use a constant format string and pass the user input as a parameter to be formatted. For example: `response.getWriter().format("%s", param)`. Additionally, apply proper HTML encoding to any user input before including it in the response using a library like OWASP ESAPI or Apache Commons Text StringEscapeUtils.

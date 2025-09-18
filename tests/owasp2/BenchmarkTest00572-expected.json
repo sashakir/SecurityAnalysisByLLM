@@ -1,0 +1,21 @@
+{
+  "file": "tests/owasp2/BenchmarkTest00572.java",
+  "issues": [
+    {
+      "type": "CommandInjection",
+      "severity": "HIGH",
+      "location": "BenchmarkTest00572.doPost:77",
+      "line": 77,
+      "line_snippet": "Process p = r.exec(cmd + bar, argsEnv);",
+      "evidence": "User-controlled input (param) is concatenated into a command string that is executed."
+    },
+    {
+      "type": "XSS",
+      "severity": "MEDIUM",
+      "location": "BenchmarkTest00572.doPost:81",
+      "line": 81,
+      "line_snippet": "response.getWriter().println(org.owasp.esapi.ESAPI.encoder().encodeForHTML(e.getMessage()));",
+      "evidence": "Uncontrolled user input is passed to Cross-Site Scripting (XSS) sink"
+    }
+  ]
+}

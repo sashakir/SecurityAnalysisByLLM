@@ -1,0 +1,13 @@
+{
+  "file": "tests/owasp1/BenchmarkTest00028.java",
+  "issues": [
+    {
+      "type": "PathTraversal",
+      "severity": "HIGH",
+      "location": "BenchmarkTest00028.doPost:55",
+      "line": 55,
+      "line_snippet": "fileName = org.owasp.benchmark.helpers.Utils.TESTFILES_DIR + param;",
+      "evidence": "User-controlled input is concatenated to a file path without validation."
+    }
+  ]
+}

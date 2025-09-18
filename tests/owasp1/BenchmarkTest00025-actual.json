@@ -1,0 +1,21 @@
+{
+  "file": "tests/owasp1/BenchmarkTest00025.java",
+  "issues": [
+    {
+      "type": "SQLi",
+      "severity": "CRITICAL",
+      "location": "BenchmarkTest00025.doPost:47",
+      "line": 47,
+      "line_snippet": "String sql = \"SELECT userid from USERS where USERNAME='foo' and PASSWORD='\" + param + \"'\";",
+      "evidence": "User-controlled input is directly concatenated into an SQL query, allowing for SQL Injection."
+    },
+    {
+      "type": "XSS",
+      "severity": "HIGH",
+      "location": "BenchmarkTest00025.doPost:54",
+      "line": 54,
+      "line_snippet": "response.getWriter().println(\"Your results are: \" + String.valueOf(results));",
+      "evidence": "Uncontrolled user input is passed to Cross-Site Scripting (XSS) sink"
+    }
+  ]
+}

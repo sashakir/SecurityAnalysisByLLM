@@ -1,0 +1,29 @@
+{
+  "file": "tests/owasp1/BenchmarkTest00023.java",
+  "issues": [
+    {
+      "type": "XSS",
+      "severity": "HIGH",
+      "location": "BenchmarkTest00023.doPost:73",
+      "line": 73,
+      "line_snippet": "response.getWriter().println(\"Welcome back: \" + user + \"<br/>\");",
+      "evidence": "Uncontrolled user input is passed to Cross-Site Scripting (XSS) sink"
+    },
+    {
+      "type": "Taint",
+      "severity": "MEDIUM",
+      "location": "BenchmarkTest00023.doPost:82",
+      "line": 82,
+      "line_snippet": "request.getSession().setAttribute(cookieName, rememberMeKey);",
+      "evidence": "User-controlled value is used as a session attribute name without validation"
+    },
+    {
+      "type": "Taint",
+      "severity": "MEDIUM",
+      "location": "BenchmarkTest00023.doPost:83",
+      "line": 83,
+      "line_snippet": "response.addCookie(rememberMe);",
+      "evidence": "User-controlled value is used in cookie without validation"
+    }
+  ]
+}

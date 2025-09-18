@@ -1,0 +1,6 @@
+# Vuln 1: Format String Injection: `BenchmarkTest00013.java:57`
+
+* Severity: High
+* Description: The application takes the `Referer` header value from the HTTP request, URL decodes it, and then directly uses it as the format string in a `format()` call without validation or sanitization.
+* Exploit Scenario: An attacker can craft a malicious HTTP request with a specially crafted `Referer` header containing format specifiers (like `%s`, `%d`, `%n`, etc.). When this value is used as the format string, it can lead to information disclosure, application crashes, or potentially code execution depending on the implementation details of the formatter.
+* Recommendation: Never use user-controlled input as a format string. Instead, use a fixed format string and pass the user input as a parameter to be formatted. For example: `response.getWriter().format(java.util.Locale.US, "Fixed format string: %s", param);`

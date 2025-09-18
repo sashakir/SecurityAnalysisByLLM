@@ -1,0 +1,13 @@
+{
+  "file": "tests/owasp1/BenchmarkTest00018.java",
+  "issues": [
+    {
+      "type": "SQLi",
+      "severity": "HIGH",
+      "location": "BenchmarkTest00018.doPost:54",
+      "line": 54,
+      "line_snippet": "String sql = \"INSERT INTO users (username, password) VALUES ('foo','\" + param + \"')\";",
+      "evidence": "User-controlled input from HTTP headers is directly concatenated into an SQL query."
+    }
+  ]
+}

@@ -1,0 +1,6 @@
+# Vuln 1: Command Injection: `BenchmarkTest00572.java:76-77`
+
+* Severity: High
+* Description: The application directly concatenates user-controlled input (`bar` variable) to a command string that is executed via `Runtime.exec()`. While there is a conditional that may assign a constant value to `bar`, if the condition evaluates to false, `bar` will contain unsanitized user input from the request parameter.
+* Exploit Scenario: An attacker can craft a request with a parameter named "BenchmarkTest00572" and a value containing shell metacharacters (e.g., "; rm -rf /; " or "& net user hacker password /add") to execute arbitrary commands on the server with the privileges of the application process.
+* Recommendation: Never concatenate user input directly into command strings. Instead, use parameterized command execution methods like `ProcessBuilder` with arguments passed as separate parameters, or properly validate and sanitize the input using a strict allowlist of permitted characters before using it in command execution.

@@ -1,0 +1,6 @@
+# Vuln 1: Command Injection: `BenchmarkTest00310.java:85-86`
+
+* Severity: High
+* Description: The application directly concatenates user-controlled input (`bar`) to a command string (`cmd`) which is then executed via `Runtime.exec()`. While the code appears to have a switch statement that assigns "bob" to `bar` when the condition is 'B', this is a false sense of security as the switch target is hardcoded to always be 'B'. However, in a real-world scenario where this code might be modified or the switch logic changes, this would lead to command injection.
+* Exploit Scenario: An attacker could manipulate the HTTP header named "BenchmarkTest00310" to include malicious OS commands like "; rm -rf /" or "& net user /add attacker password123". When the application processes this input and appends it to the command, the attacker's commands would be executed with the privileges of the application server.
+* Recommendation: Never concatenate user input directly into command strings. Instead, use parameterized command execution methods like `ProcessBuilder` with arguments passed as separate parameters rather than part of the command string. Additionally, implement strict input validation to ensure only expected values are accepted.

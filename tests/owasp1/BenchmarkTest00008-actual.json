@@ -1,0 +1,21 @@
+{
+  "file": "tests/owasp1/BenchmarkTest00008.java",
+  "issues": [
+    {
+      "type": "SQLi",
+      "severity": "CRITICAL",
+      "location": "BenchmarkTest00008.doPost:52",
+      "line": 52,
+      "line_snippet": "String sql = \"{call \" + param + \"}\";",
+      "evidence": "User-controlled input from request header is directly concatenated into SQL query."
+    },
+    {
+      "type": "XSS",
+      "severity": "HIGH",
+      "location": "BenchmarkTest00008.doPost:63",
+      "line": 63,
+      "line_snippet": "response.getWriter().println(\"Error processing request.\");",
+      "evidence": "Uncontrolled user input is passed to Cross-Site Scripting (XSS) sink"
+    }
+  ]
+}

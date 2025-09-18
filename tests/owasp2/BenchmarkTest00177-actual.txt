@@ -1,0 +1,6 @@
+# Vuln 1: Command Injection: `BenchmarkTest00177.java:67-68`
+
+* Severity: High
+* Description: User input from the HTTP header `BenchmarkTest00177` is directly incorporated into a command executed by `Runtime.exec()` without proper sanitization, allowing command injection attacks.
+* Exploit Scenario: An attacker can craft a malicious HTTP header value containing shell metacharacters (like `;`, `|`, `&`, etc.) to execute arbitrary commands on the server with the privileges of the application. For example, sending a header `BenchmarkTest00177: ; cat /etc/passwd` would execute the `cat /etc/passwd` command after the intended echo command.
+* Recommendation: Never incorporate user input directly into command strings. Instead, use parameterized command execution methods or properly validate and sanitize the input by implementing a strict allowlist of permitted characters and rejecting any input containing shell metacharacters. Consider using Java's ProcessBuilder with separate arguments rather than concatenating strings for command execution.

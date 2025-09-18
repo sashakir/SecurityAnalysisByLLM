@@ -1,0 +1,27 @@
+# Vuln 1: Path Traversal: `BenchmarkTest00002.java:76-77`
+
+* Severity: High
+* Description: The application uses unsanitized user input from a cookie to construct a file path, creating a path traversal vulnerability. The value of the `BenchmarkTest00002` cookie is decoded and directly appended to a base directory path without proper validation or sanitization.
+* Exploit Scenario: An attacker could modify the `BenchmarkTest00002` cookie to contain path traversal sequences like `../../../etc/passwd` which would allow them to create or overwrite files outside the intended directory. Since a `FileOutputStream` is created with this path, the attacker can potentially write to sensitive system files.
+* Recommendation: Implement proper input validation by either:
+  1. Using a whitelist of allowed filenames
+  2. Sanitizing the input by removing or encoding path traversal sequences
+  3. Using Java's `Path` API with `normalize()` and validating the final path is within the intended directory
+  4. Consider using ESAPI's `FileValidator` to validate file paths
+
+```java
+// Example fix using Path validation:
+String baseDir = org.owasp.benchmark.helpers.Utils.TESTFILES_DIR;
+Path baseDirPath = Paths.get(baseDir).normalize();
+Path requestedPath = Paths.get(baseDir, param).normalize();
+
+// Verify the normalized path starts with the base directory path
+if (!requestedPath.startsWith(baseDirPath)) {
+    // Path traversal attempt detected - reject the request
+    response.getWriter().println("Invalid file path requested");
+    return;
+}
+
+// Now safe to use the file
+fileName = requestedPath.toString();
+```

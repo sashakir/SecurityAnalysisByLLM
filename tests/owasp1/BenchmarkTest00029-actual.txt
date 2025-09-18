@@ -1,0 +1,15 @@
+# Vuln 1: Path Traversal: `BenchmarkTest00029.java:76-77`
+
+* Severity: High
+* Category: path_traversal
+* Description: The code creates a file using user-controlled input without proper path validation, allowing for potential path traversal attacks.
+* Exploit Scenario: An attacker could provide specially crafted input in the `BenchmarkTest00029` parameter that, when processed through the application logic, could potentially influence the file path. While the immediate file path (`passwordFile.txt`) is hardcoded, the parent directory comes from `Utils.TESTFILES_DIR` which could potentially be manipulated depending on how it's implemented.
+* Recommendation: Validate and sanitize all user input before using it in file operations. Use `java.nio.file.Path` with the `normalize()` method to remove any path traversal sequences, and verify the resulting path is within the expected directory. Additionally, consider implementing a whitelist of allowed characters and patterns for file paths.
+
+# Vuln 2: Information Disclosure: `BenchmarkTest00029.java:76-83`
+
+* Severity: Medium
+* Category: sensitive_data_exposure
+* Description: The application writes sensitive user input (after hashing) to a file named "passwordFile.txt" and reveals that the data has been stored to the user.
+* Exploit Scenario: While the data is hashed before storage, the application explicitly tells the user where the sensitive data is being stored. This could aid attackers in targeting specific files for exfiltration in a secondary attack.
+* Recommendation: Do not disclose internal file paths or storage mechanisms to users. Remove the response that indicates where and how the data was stored. Consider using a more secure storage mechanism for sensitive data such as a database with proper access controls rather than a flat file.

@@ -1,0 +1,6 @@
+# Vuln 1: Command Injection: `BenchmarkTest00571.java:71-72`
+
+* Severity: High
+* Description: The servlet executes an operating system command with an environment variable controlled by user input without proper validation or sanitization. The `bar` variable, which can contain user-controlled input from request parameters, is passed directly to `Runtime.exec()` as an environment variable.
+* Exploit Scenario: An attacker can submit a specially crafted HTTP request with a parameter value that contains malicious environment variable content. Since environment variables can influence command execution behavior, this could lead to command injection, information disclosure, or privilege escalation depending on the system configuration.
+* Recommendation: Never use untrusted user input in environment variables for process execution. If environment variables must be set from user input, implement strict validation using a whitelist approach to ensure only safe values are allowed. Consider using a security library like ESAPI (which is already imported in the code) to validate and sanitize the input before using it in sensitive operations.

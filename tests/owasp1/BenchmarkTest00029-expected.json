@@ -1,0 +1,21 @@
+{
+  "file": "tests/owasp1/BenchmarkTest00029.java",
+  "issues": [
+    {
+      "type": "XSS",
+      "severity": "HIGH",
+      "location": "BenchmarkTest00029.doPost:92",
+      "line": 92,
+      "line_snippet": "                                             .encodeForHTML(new String(input))",
+      "evidence": "Uncontrolled user input is passed to Cross-Site Scripting (XSS) sink"
+    },
+    {
+      "type": "XSS",
+      "severity": "HIGH",
+      "location": "BenchmarkTest00029.doPost:86",
+      "line": 86,
+      "line_snippet": "                             \"Sensitive value '\"",
+      "evidence": "Uncontrolled user input is passed to Cross-Site Scripting (XSS) sink"
+    }
+  ]
+}

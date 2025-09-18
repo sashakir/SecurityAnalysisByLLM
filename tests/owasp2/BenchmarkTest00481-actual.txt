@@ -1,0 +1,6 @@
+# Vuln 1: Command Injection: `BenchmarkTest00481.java:67-68`
+
+* Severity: High
+* Description: User input from the `BenchmarkTest00481` parameter is directly incorporated into a command executed by the system without proper sanitization or validation.
+* Exploit Scenario: An attacker can submit a request with a malicious payload in the `BenchmarkTest00481` parameter such as `; rm -rf /` or `& net user hacker password /add` to execute arbitrary commands on the server with the privileges of the application.
+* Recommendation: Never include user input in command execution. Instead, use safer alternatives like APIs that provide the required functionality. If command execution is absolutely necessary, create a whitelist of allowed commands and validate user input against this list, or use parameterized command execution methods that don't involve shell interpretation.

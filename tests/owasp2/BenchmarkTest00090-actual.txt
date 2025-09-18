@@ -1,0 +1,26 @@
+# Vuln 1: Command Injection: `BenchmarkTest00090.java:83-84`
+
+* Severity: High
+* Category: command_injection
+* Description: The application directly concatenates user-controlled input (`bar`) to a command string (`cmd`) which is then executed via `Runtime.exec()`. While there is a conditional check that appears to assign a constant value to `bar`, the `else` branch allows the user-controlled cookie value to be assigned to `bar` when the condition is false.
+
+* Exploit Scenario: An attacker can modify the `BenchmarkTest00090` cookie value to include shell metacharacters (e.g., `; rm -rf /` or `& cat /etc/passwd`) which would be executed on the server when the `doPost` method is called. Since the cookie value is URL-decoded before use, an attacker can encode malicious commands to bypass simple validation.
+
+* Recommendation: Never concatenate user input directly into command strings. Instead:
+  1. Use a whitelist of allowed commands
+  2. Implement command argument arrays instead of string concatenation
+  3. Use Java's ProcessBuilder with proper argument separation
+  4. Consider using ESAPI's command execution methods which have built-in protections
+
+Example fix:
+```java
+// Instead of:
+Process p = r.exec(cmd + bar);
+
+// Use ProcessBuilder with arguments properly separated:
+List<String> commands = new ArrayList<>();
+commands.add(cmd);
+commands.add(bar); // As a separate argument, not concatenated
+ProcessBuilder pb = new ProcessBuilder(commands);
+Process p = pb.start();
+```

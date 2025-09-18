@@ -1,0 +1,13 @@
+{
+  "file": "tests/owasp2/BenchmarkTest00406.java",
+  "issues": [
+    {
+      "type": "CommandInjection",
+      "severity": "HIGH",
+      "location": "BenchmarkTest00406.doPost:74",
+      "line": 74,
+      "line_snippet": "Process p = r.exec(args);",
+      "evidence": "User-controlled input is used in command execution without validation."
+    }
+  ]
+}

@@ -1,0 +1,11 @@
+# Vuln 1: SQL Injection: `BenchmarkTest00025.java:45`
+
+* Severity: High
+* Description: User input from the `BenchmarkTest00025` parameter is directly concatenated into an SQL query without proper sanitization or parameterization, creating a SQL injection vulnerability.
+* Exploit Scenario: An attacker can submit malicious input like `' OR '1'='1` which would modify the query to `SELECT userid from USERS where USERNAME='foo' and PASSWORD='' OR '1'='1'`, bypassing authentication and potentially accessing unauthorized user accounts.
+* Recommendation: Use prepared statements with parameterized queries instead of string concatenation. Replace the vulnerable code with:
+  ```java
+  String sql = "SELECT userid from USERS where USERNAME='foo' and PASSWORD=?";
+  Long results = org.owasp.benchmark.helpers.DatabaseHelper.JDBCtemplate.queryForObject(
+      sql, new Object[]{param}, Long.class);
+  ```

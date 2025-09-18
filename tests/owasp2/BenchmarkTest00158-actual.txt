@@ -1,0 +1,15 @@
+# Vuln 1: Command Injection: `BenchmarkTest00158.java:65-67`
+
+* Severity: High
+* Description: The application directly incorporates user input from the HTTP header `BenchmarkTest00158` into a command executed by the operating system without proper sanitization or validation.
+* Exploit Scenario: An attacker can send a specially crafted HTTP request with a manipulated `BenchmarkTest00158` header containing shell metacharacters (e.g., `; rm -rf /` or `& cat /etc/passwd`) to execute arbitrary commands on the server with the privileges of the web application process.
+* Recommendation: Never use user-controlled input in command execution. If command execution is necessary, use a whitelist approach to validate input or pass user input as arguments to the command rather than part of the command string itself. For example, modify the code to use command arguments instead of string concatenation:
+  ```java
+  // Instead of:
+  argList.add("echo " + bar);
+  
+  // Use:
+  argList.add("echo");
+  argList.add(bar);
+  ```
+  This change would prevent command injection as the input would be treated as an argument to the echo command rather than being interpreted by the shell.

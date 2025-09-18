@@ -1,0 +1,21 @@
+{
+  "file": "tests/owasp2/BenchmarkTest00175.java",
+  "issues": [
+    {
+      "type": "CommandInjection",
+      "severity": "HIGH",
+      "location": "BenchmarkTest00175.doPost:67",
+      "line": 67,
+      "line_snippet": "Process p = r.exec(cmd, argsEnv);",
+      "evidence": "User-controlled input (param) is passed to Runtime.exec() without validation."
+    },
+    {
+      "type": "XSS",
+      "severity": "HIGH",
+      "location": "BenchmarkTest00175.doPost:72",
+      "line": 72,
+      "line_snippet": "response.getWriter().println(org.owasp.esapi.ESAPI.encoder().encodeForHTML(e.getMessage()));",
+      "evidence": "Uncontrolled user input is passed to Cross-Site Scripting (XSS) sink"
+    }
+  ]
+}

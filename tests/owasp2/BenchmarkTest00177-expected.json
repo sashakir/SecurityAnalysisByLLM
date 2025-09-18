@@ -1,0 +1,13 @@
+{
+  "file": "tests/owasp2/BenchmarkTest00177.java",
+  "issues": [
+    {
+      "type": "CommandInjection",
+      "severity": "HIGH",
+      "location": "BenchmarkTest00177.doPost:69",
+      "line": 69,
+      "line_snippet": "r.exec(cmd + bar, argsEnv, new java.io.File(System.getProperty(\"user.dir\")));",
+      "evidence": "User-controlled input 'bar' is concatenated into a command string and executed."
+    }
+  ]
+}

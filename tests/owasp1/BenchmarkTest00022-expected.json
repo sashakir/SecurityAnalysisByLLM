@@ -1,0 +1,13 @@
+{
+  "file": "tests/owasp1/BenchmarkTest00022.java",
+  "issues": [
+    {
+      "type": "XSS",
+      "severity": "HIGH",
+      "location": "BenchmarkTest00022.doPost:85",
+      "line": 85,
+      "line_snippet": " + org.owasp.esapi.ESAPI.encoder().encodeForHTML(new String(input)) + \"' hashed and stored<br/>\"",
+      "evidence": "Uncontrolled user input is passed to Cross-Site Scripting (XSS) sink"
+    }
+  ]
+}

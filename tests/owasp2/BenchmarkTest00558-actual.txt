@@ -1,0 +1,24 @@
+# Vuln 1: Command Injection: `BenchmarkTest00558.java:76-77`
+
+* Severity: High
+* Category: command_injection
+* Description: User input from HTTP request parameters is directly incorporated into a command executed by the system without proper sanitization or validation. The code retrieves a parameter value from the request, assigns it to the `bar` variable, and then uses it in a command executed via ProcessBuilder.
+* Exploit Scenario: An attacker can submit a request with a parameter containing shell metacharacters (e.g., `; rm -rf /` or `& cat /etc/passwd`) which would be executed by the server with the privileges of the web application. For example, if an attacker sends a request with a parameter named "malicious" with value "BenchmarkTest00558", the application will use "malicious" as the `param` variable, which eventually becomes the `bar` variable used in the command.
+* Recommendation: Never include user input in command execution. If command execution with user input is absolutely necessary, implement strict input validation using a whitelist approach and/or use parameterized command execution methods that don't involve shell interpretation. Consider using Java's built-in functionality instead of executing shell commands.
+
+```java
+// Vulnerable code:
+argList.add("echo " + bar);
+ProcessBuilder pb = new ProcessBuilder(argList);
+Process p = pb.start();
+
+// Recommended fix - Option 1: Strict validation
+if (!bar.matches("^[a-zA-Z0-9]+$")) {
+    throw new IllegalArgumentException("Invalid input");
+}
+argList.add("echo " + bar);
+
+// Recommended fix - Option 2: Avoid shell commands entirely
+// Instead of executing a shell command, use Java's built-in functionality
+response.getWriter().println(bar);
+```

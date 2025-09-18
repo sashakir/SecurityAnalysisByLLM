@@ -1,0 +1,1 @@
+TestStoreInObject.java:14

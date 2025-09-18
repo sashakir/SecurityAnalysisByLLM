@@ -1,0 +1,21 @@
+{
+  "file": "tests/owasp2/BenchmarkTest00305.java",
+  "issues": [
+    {
+      "type": "CommandInjection",
+      "severity": "CRITICAL",
+      "location": "BenchmarkTest00305.doPost:99",
+      "line": 99,
+      "line_snippet": "Process p = r.exec(args, argsEnv, new java.io.File(System.getProperty(\"user.dir\")));",
+      "evidence": "User-controlled input from HTTP headers is used to construct command arguments."
+    },
+    {
+      "type": "XSS",
+      "severity": "MEDIUM",
+      "location": "BenchmarkTest00305.doPost:103",
+      "line": 103,
+      "line_snippet": "response.getWriter().println(org.owasp.esapi.ESAPI.encoder().encodeForHTML(e.getMessage()));",
+      "evidence": "Uncontrolled user input is passed to Cross-Site Scripting (XSS) sink"
+    }
+  ]
+}

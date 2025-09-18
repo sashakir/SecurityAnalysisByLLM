@@ -1,0 +1,13 @@
+{
+  "file": "tests/owasp2/BenchmarkTest00494.java",
+  "issues": [
+    {
+      "type": "CommandInjection",
+      "severity": "HIGH",
+      "location": "BenchmarkTest00494.doPost:83",
+      "line": 83,
+      "line_snippet": "Process p = r.exec(args);",
+      "evidence": "User-controlled input from request parameter is used to construct command-line arguments."
+    }
+  ]
+}

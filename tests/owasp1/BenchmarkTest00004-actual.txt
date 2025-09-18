@@ -1,0 +1,24 @@
+# Vuln 1: Insecure Session Attribute Name: `BenchmarkTest00004.java:72`
+
+* Severity: Medium
+* Category: session_manipulation
+* Description: The application uses user-controlled input (`param` from a cookie) as a session attribute name without validation or sanitization.
+* Exploit Scenario: An attacker could manipulate the cookie value to create arbitrary session attributes, potentially overwriting existing attributes or causing session manipulation issues. This could lead to session fixation or other session-related attacks.
+* Recommendation: Use a fixed, predefined string as the session attribute name instead of using user-controlled input. If dynamic attribute names are necessary, implement strict validation to ensure only expected values are used.
+
+```java
+// Current vulnerable code
+request.getSession().setAttribute(param, "10340");
+
+// Recommended fix
+// Option 1: Use a fixed attribute name
+request.getSession().setAttribute("fixedAttributeName", "10340");
+
+// Option 2: If dynamic names are needed, validate against a whitelist
+if (isValidAttributeName(param)) {
+    request.getSession().setAttribute(param, "10340");
+} else {
+    // Log attempt and use a safe default
+    request.getSession().setAttribute("defaultAttribute", "10340");
+}
+```

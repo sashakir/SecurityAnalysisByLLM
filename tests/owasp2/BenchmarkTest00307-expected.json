@@ -1,0 +1,21 @@
+{
+  "file": "tests/owasp2/BenchmarkTest00307.java",
+  "issues": [
+    {
+      "type": "CommandInjection",
+      "severity": "HIGH",
+      "location": "BenchmarkTest00307.doPost:75",
+      "line": 75,
+      "line_snippet": "Process p = r.exec(cmd + bar, argsEnv);",
+      "evidence": "User-controlled input from HTTP headers is passed to Runtime.exec()"
+    },
+    {
+      "type": "XSS",
+      "severity": "MEDIUM",
+      "location": "BenchmarkTest00307.doPost:79",
+      "line": 79,
+      "line_snippet": "response.getWriter().println(org.owasp.esapi.ESAPI.encoder().encodeForHTML(e.getMessage()));",
+      "evidence": "Uncontrolled user input is passed to Cross-Site Scripting (XSS) sink"
+    }
+  ]
+}

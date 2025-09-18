@@ -1,0 +1,13 @@
+{
+  "file": "tests/owasp1/BenchmarkTest00024.java",
+  "issues": [
+    {
+      "type": "SQLi",
+      "severity": "HIGH",
+      "location": "BenchmarkTest00024.doPost:47",
+      "line": 47,
+      "line_snippet": "String sql = \"SELECT * from USERS where USERNAME=? and PASSWORD='\" + param + \"'\";",
+      "evidence": "User-controlled input 'param' is concatenated into an SQL query without sanitization."
+    }
+  ]
+}

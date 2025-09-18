@@ -1,0 +1,21 @@
+{
+  "file": "tests/owasp1/BenchmarkTest00002.java",
+  "issues": [
+    {
+      "type": "PathTraversal",
+      "severity": "HIGH",
+      "location": "BenchmarkTest00002.doPost:72",
+      "line": 72,
+      "line_snippet": "fos = new java.io.FileOutputStream(fileName, false);",
+      "evidence": "User-controlled input from cookies is used to construct a file path."
+    },
+    {
+      "type": "XSS",
+      "severity": "HIGH",
+      "location": "BenchmarkTest00002.doPost:73",
+      "line": 73,
+      "line_snippet": "response.getWriter().println(",
+      "evidence": "Uncontrolled user input is passed to Cross-Site Scripting (XSS) sink"
+    }
+  ]
+}
